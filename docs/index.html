@@ -274,7 +274,7 @@
         }
 
         saveValueAndUpdateUI(newValue) {
-            localStorage.setItem(this.id, newValue);
+            localStorage.setItem(appId + this.id, newValue);
             this.updateOutlineColor();
         }
 
@@ -337,7 +337,7 @@
             super(id, title, defaultValue, resetType, pageName);
             this.choices = choices;
             this.buttonMap = new Map();
-            this._value = localStorage.getItem(this.id) || defaultValue;
+            this._value = localStorage.getItem(appId + this.id) || defaultValue;
         }
 
         set value(newValue) {
@@ -524,10 +524,10 @@
         displayPage(pageMaps[0].name);
         // if didn't manage to save, upload to unsentSubmission to resend later
         if (!saved) {
-            let unsentSubmissions = JSON.parse(localStorage.getItem('unsentSubmissions')) || [];
+            let unsentSubmissions = JSON.parse(localStorage.getItem(appId + 'unsentSubmissions')) || [];
             console.log('Submission saved to UNSAVED Submissions:', formAnswers);
             unsentSubmissions.push(formAnswers);
-            localStorage.setItem('unsentSubmissions', JSON.stringify(unsentSubmissions));
+            localStorage.setItem(appId + 'unsentSubmissions', JSON.stringify(unsentSubmissions));
         }
         alert('Saved successfully')
     }
@@ -535,7 +535,7 @@
     async function saveAllUnSavedAnswers() {
         if (submitting) return;
         submitting = true;
-        let unsentSubmissions = JSON.parse(localStorage.getItem('unsentSubmissions')) || []
+        let unsentSubmissions = JSON.parse(localStorage.getItem(appId + 'unsentSubmissions')) || []
         let newUnsentSubmissions = []; // Store only failed ones
         console.log("Attempting to saved all unsaved answers", unsentSubmissions);
         for (const submission of unsentSubmissions) {
@@ -557,7 +557,7 @@
             }
         }
         // Only keep failed submissions
-        localStorage.setItem('unsentSubmissions', JSON.stringify(newUnsentSubmissions));
+        localStorage.setItem(appId + 'unsentSubmissions', JSON.stringify(newUnsentSubmissions));
         submitting = false;
     }
 
@@ -566,16 +566,16 @@
             if (!ignoreResetTypes) {
                 if (question.resetType === RESET_TYPES.KEEP) continue;
                 if (question.resetType === RESET_TYPES.INCREASE) {
-                    let value = localStorage.getItem(question.id) || 0;
+                    let value = localStorage.getItem(appId + question.id) || 0;
                     value = String(parseInt(value) + 1)
-                    localStorage.setItem(question.id, value);
+                    localStorage.setItem(appId + question.id, value);
                     question.value = value;
                     continue;
                 }
             }
             question.clear();
             question.outlineColor = COLORS.NEUTRAL;
-            localStorage.removeItem(question.id);
+            localStorage.removeItem(appId + question.id);
         }
     }
 
@@ -597,7 +597,7 @@
         window.scrollTo({ top: 0, behavior: 'smooth' });
         updateButtons(pageName);
         htmlGlobals.titleLabel.textContent = pageName;
-        localStorage.setItem('currentPage', pageName);
+        localStorage.setItem(appId + 'currentPage', pageName);
     }
 
     function updateButtons(pageName) {
@@ -636,7 +636,7 @@
                     const questionObject = createQuestion(question, page.name);
                     pageContainer.appendChild(questionObject.createElement()); // add the html element
 
-                    const savedValue = localStorage.getItem(question.id);
+                    const savedValue = localStorage.getItem(appId + question.id);
                     if (savedValue) questionObject.value = savedValue;
                     else questionObject.clear();
 
@@ -689,14 +689,14 @@
             clearAllAnswers(true);
             displayPage(pageMaps[0].name);
         } else {
-            displayPage(localStorage.getItem('currentPage') || pageMaps[0].name);
+            displayPage(localStorage.getItem(appId + 'currentPage') || pageMaps[0].name);
         }
     }
 
     function initializeApp() {
         createAllQuestions();
         renderAbsoluteNavigationButtons(htmlGlobals.absoluteNavContainer);
-        displayPage(localStorage.getItem('currentPage') || pageMaps[0].name);
+        displayPage(localStorage.getItem(appId + 'currentPage') || pageMaps[0].name);
         setUpSwipeListeners();
         disableZoom();
         setInterval(() => { // try to save all unsaved answers every 4 minutes
@@ -746,10 +746,10 @@
                 "name": "Pre",
                 "questions": [
                     "General Info",
-                    {"id": "playoffs_scouter_name", "title": "Scouter name", "resetType": RESET_TYPES.KEEP, "type": LineQuestion.type},
+                    {"id": "scouter_name", "title": "Scouter name", "resetType": RESET_TYPES.KEEP, "type": LineQuestion.type},
                     {"id": "match_number", "title": "Match Number", "defaultValue": 1, "resetType": RESET_TYPES.INCREASE, "type": NumberQuestion.type}, "Team Info",
                     {"id": "alliance_number", "title": "Alliance Number", "defaultValue": 1, "resetType": RESET_TYPES.INCREASE, "type": NumberQuestion.type}, "Team Info",
-                    {"id": "playoffs_alliance_color", "title": "Alliance", "resetType": RESET_TYPES.KEEP, "choices": ["Red", "Blue"], "type": SelectQuestion.type}
+                    {"id": "alliance_color", "title": "Alliance", "resetType": RESET_TYPES.KEEP, "choices": ["Red", "Blue"], "type": SelectQuestion.type}
                 ]
             },
             {
@@ -801,6 +801,7 @@
     const pageAmount = pageMaps.length;
     const questionObjects = [];
     const absoluteNavigationElements = []
+    const appId = "playoffs_"
 
     initializeApp();
 
