@@ -759,8 +759,8 @@
                 "questions": [
                     "General Info",
                     {"id": "scouter_name", "title": "Scouter name", "resetType": RESET_TYPES.KEEP, "type": LineQuestion.type},
-                    {"id": "match_number", "title": "Match Number", "defaultValue": 1, "resetType": RESET_TYPES.INCREASE, "type": NumberQuestion.type}, "Team Info",
-                    {"id": "alliance_number", "title": "Alliance Number", "defaultValue": 1, "resetType": RESET_TYPES.INCREASE, "type": NumberQuestion.type}, "Team Info",
+                    {"id": "match_number", "title": "Match Number", "defaultValue": 1, "type": NumberQuestion.type}, "Team Info",
+                    {"id": "alliance_number", "title": "Alliance Number", "defaultValue": 1, "type": NumberQuestion.type}, "Team Info",
                     {"id": "alliance_color", "title": "Alliance", "resetType": RESET_TYPES.KEEP, "choices": ["Red", "Blue"], "type": SelectQuestion.type}
                 ]
             },
@@ -782,6 +782,10 @@
                 "name": "Post",
                 "questions": [
                     {"id": "notes", "title": "Notes:", "type": TextBoxQuestion.type},
+                    {"id": "coral_rp", "title": "Coral Rp", "choices": ["Yes", "No"], "type": SelectQuestion.type},
+                    {"id": "auto_rp", "title": "Auto Rp", "choices": ["Yes", "No"], "type": SelectQuestion.type},
+                    {"id": "win_rp", "title": "Win Rp", "choices": ["Yes", "No"], "type": SelectQuestion.type},
+                    {"id": "climb_rp", "title": "Climb Rp", "choices": ["Yes", "No"], "type": SelectQuestion.type},
                 ]
             },
         ]
