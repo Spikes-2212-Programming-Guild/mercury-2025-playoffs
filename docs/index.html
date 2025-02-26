@@ -524,7 +524,7 @@
             if (error instanceof DOMException && error.name === "AbortError") {
                 console.error("Submission timed out, saving to unsaved submissions.");
                 saveAnswers(false, formData);
-            } elsr if (error instanceof TypeError) {
+            } else if (error instanceof TypeError) {
                 console.error("Submission Failed Due to Wifi, Sending to Unsaved ", error);
                 saveAnswers(false, formData);
             } else {
