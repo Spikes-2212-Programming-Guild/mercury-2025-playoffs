@@ -737,8 +737,8 @@
         let distanceY = Math.abs(endY - startY);
         if (submitting || distanceY > 300) return;
 
-        if (diffX > 125) htmlGlobals.relativeNavigationButtons.prev.click();
-        else if (diffX < -200) htmlGlobals.relativeNavigationButtons.next.click();
+        if (diffX > 250) htmlGlobals.relativeNavigationButtons.prev.click();
+        else if (diffX < -350) htmlGlobals.relativeNavigationButtons.next.click();
     }
 
     const ALL_TEAMS = [1690, 3339, 5951, 2231, 1574, 1577, 5614, 3075, 5990, 5715, 6740, 1937, 5987, 1657, 4590,
@@ -760,7 +760,7 @@
                     "General Info",
                     {"id": "scouter_name", "title": "Scouter name", "resetType": RESET_TYPES.KEEP, "type": LineQuestion.type},
                     {"id": "match_number", "title": "Match Number", "defaultValue": 1, "resetType": RESET_TYPES.INCREASE, "type": NumberQuestion.type}, "Team Info",
-                    {"id": "alliance_number", "title": "Alliance Number", "defaultValue": 1, "resetType": RESET_TYPES.INCREASE, "type": NumberQuestion.type}, "Team Info",
+                    {"id": "alliance_number", "title": "Alliance Number", "defaultValue": 1, "type": NumberQuestion.type}, "Team Info",
                     {"id": "alliance_color", "title": "Alliance", "resetType": RESET_TYPES.KEEP, "choices": ["Red", "Blue"], "type": SelectQuestion.type}
                 ]
             },
@@ -781,6 +781,10 @@
             {
                 "name": "Post",
                 "questions": [
+                    {"id": "coral_rp", "title": "Coral Rp", "choices": ["Yes", "No"], "type": SelectQuestion.type},
+                    {"id": "auto_rp", "title": "Auto Rp", "choices": ["Yes", "No"], "type": SelectQuestion.type},
+                    {"id": "win_rp", "title": "Win Rp", "choices": ["Yes", "No"], "type": SelectQuestion.type},
+                    {"id": "climb_rp", "title": "Climb Rp", "choices": ["Yes", "No"], "type": SelectQuestion.type},
                     {"id": "notes", "title": "Notes:", "type": TextBoxQuestion.type},
                 ]
             },
