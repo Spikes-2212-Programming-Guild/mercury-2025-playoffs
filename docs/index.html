@@ -14,6 +14,7 @@
 
 <div id="pages_container">
     <button id="reset_button" onclick="resetAllButton()">Reset All</button>
+    <button id="re_send_button" onclick="saveAllUnSavedAnswers(); alert('trying to resend unsaved answers')">Send Unsaved Data</button>
 </div>
 
 <div id="loadingOverlay">Submitting...</div>
@@ -101,6 +102,14 @@
     #reset_button {
         position: absolute;
         bottom: -160vh;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 2em;
+    }
+
+    #re_send_button {
+        position: absolute;
+        bottom: -150vh;
         left: 50%;
         transform: translateX(-50%);
         font-size: 2em;
