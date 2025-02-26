@@ -497,6 +497,10 @@
         submitting = true;
         document.body.style.pointerEvents = "none";
         htmlGlobals.loadingOverlay.style.visibility = "visible";
+        
+        const TIMEOUT = 5000; // Set the timeout duration in milliseconds (5 seconds)
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), TIMEOUT);
 
         try {
             const response = await fetch("https://mercury-2025-server.onrender.com/submit-playoffs", {
@@ -505,7 +509,10 @@
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify(formData),
+                signal: controller.signal, // Attach the abort signal
             });
+            clearTimeout(timeoutId); // Clear the timeout if the request succeeds
+            
             if (response.ok) {
                 console.log("Submitted Successfully: ", formData);
                 saveAnswers(true, formData);
@@ -514,7 +521,10 @@
             }
         } catch (error) {
             console.error("Submitting Failed: ", formData);
-            if (error instanceof TypeError) {
+            if (error instanceof DOMException && error.name === "AbortError") {
+                console.error("Submission timed out, saving to unsaved submissions.");
+                saveAnswers(false, formData);
+            } elsr if (error instanceof TypeError) {
                 console.error("Submission Failed Due to Wifi, Sending to Unsaved ", error);
                 saveAnswers(false, formData);
             } else {
@@ -746,8 +756,8 @@
         let distanceY = Math.abs(endY - startY);
         if (submitting || distanceY > 300) return;
 
-        if (diffX > 250) htmlGlobals.relativeNavigationButtons.prev.click();
-        else if (diffX < -350) htmlGlobals.relativeNavigationButtons.next.click();
+        if (diffX > 300) htmlGlobals.relativeNavigationButtons.prev.click();
+        else if (diffX < -400) htmlGlobals.relativeNavigationButtons.next.click();
     }
 
     const ALL_TEAMS = [1690, 3339, 5951, 2231, 1574, 1577, 5614, 3075, 5990, 5715, 6740, 1937, 5987, 1657, 4590,
