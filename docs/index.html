@@ -493,6 +493,10 @@
             formData[question.id] = String(question.value);
         }
 
+        if (submitting) {
+            saveAnswers(false, formData);
+        }
+
         // Disable all interactive elements
         submitting = true;
         document.body.style.pointerEvents = "none";
