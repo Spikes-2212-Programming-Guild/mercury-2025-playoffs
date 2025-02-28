@@ -497,7 +497,7 @@
         submitting = true;
         document.body.style.pointerEvents = "none";
         htmlGlobals.loadingOverlay.style.visibility = "visible";
-
+        
         const TIMEOUT = 5000; // Set the timeout duration in milliseconds (5 seconds)
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), TIMEOUT);
@@ -511,9 +511,8 @@
                 body: JSON.stringify(formData),
                 signal: controller.signal, // Attach the abort signal
             });
-
-            clearTimeout(timeoutId)
-
+            clearTimeout(timeoutId); // Clear the timeout if the request succeeds
+            
             if (response.ok) {
                 console.log("Submitted Successfully: ", formData);
                 saveAnswers(true, formData);
@@ -533,6 +532,7 @@
             }
         }
 
+        // clearing old answers and enabling interactive elements
         clearAllAnswers(false);
         document.body.style.pointerEvents = "auto";
         htmlGlobals.loadingOverlay.style.visibility = "hidden";
@@ -756,8 +756,8 @@
         let distanceY = Math.abs(endY - startY);
         if (submitting || distanceY > 300) return;
 
-        if (diffX > 250) htmlGlobals.relativeNavigationButtons.prev.click();
-        else if (diffX < -350) htmlGlobals.relativeNavigationButtons.next.click();
+        if (diffX > 300) htmlGlobals.relativeNavigationButtons.prev.click();
+        else if (diffX < -400) htmlGlobals.relativeNavigationButtons.next.click();
     }
 
     const ALL_TEAMS = [1690, 3339, 5951, 2231, 1574, 1577, 5614, 3075, 5990, 5715, 6740, 1937, 5987, 1657, 4590,
@@ -800,6 +800,10 @@
             {
                 "name": "Post",
                 "questions": [
+                    {"id": "coral_rp", "title": "Coral Rp", "choices": ["Yes", "No"], "type": SelectQuestion.type},
+                    {"id": "auto_rp", "title": "Auto Rp", "choices": ["Yes", "No"], "type": SelectQuestion.type},
+                    {"id": "win_rp", "title": "Win Rp", "choices": ["Yes", "No"], "type": SelectQuestion.type},
+                    {"id": "climb_rp", "title": "Climb Rp", "choices": ["Yes", "No"], "type": SelectQuestion.type},
                     {"id": "notes", "title": "Notes:", "type": TextBoxQuestion.type},
                 ]
             },
