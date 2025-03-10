@@ -588,7 +588,6 @@
     }
 
     function clearAllAnswers(ignoreResetTypes) {
-        resetGameReminder();
         for (const question of questionObjects) {
             if (!ignoreResetTypes) {
                 if (question.resetType === RESET_TYPES.KEEP) continue;
@@ -825,26 +824,6 @@
         else if (diffX < -200) htmlGlobals.relativeNavigationButtons.next.click();
     }
 
-    function checkIfStarted() {
-        if (gameStarted) return;
-
-        for (const question of questionObjects) {
-            if (question.id === "left_starting_line" && question.isValid()) {
-                gameStarted = true;
-                clearInterval(checkInterval); // Stop checking
-                setTimeout(() => {
-                    if (getFromLocalStorage('currentPageName') || pageMaps[0].name === "Auto") displayPage('Teleop')
-                }, 1000 * 15);
-                break;
-            }
-        }
-    }
-
-    function resetGameReminder() {
-        gameStarted = false;
-        checkInterval = setInterval(() => this.checkIfStarted(), 100);
-    }
-
     const ALL_TEAMS = [
         1690, 3339, 5951, 2231, 1574, 1577, 5614, 3075, 5990, 5715, 6740, 1937, 5987, 1657, 4590,
         5654, 7039, 2630, 9739, 2096, 3065, 1942, 6104, 7845, 3316, 5554, 6738, 4320, 9738, 7067,
@@ -924,10 +903,6 @@
     const questionObjects = [];
     const absoluteNavigationElements = []
     const pagesTitleHTMLObjects = new Map();
-    let gameStarted = false;
-    let checkInterval = null;
-    resetGameReminder();
-
 
     initializeApp();
 
