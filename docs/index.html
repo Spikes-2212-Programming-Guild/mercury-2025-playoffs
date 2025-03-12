@@ -182,9 +182,9 @@
 
     .question textarea {
         outline: white 3px solid;
-        margin: 0.3em;
+        margin: 0.1em;
         width: 10em;
-        height: 7em;
+        height: 10em;
         border-radius: 10px;
     }
 
@@ -324,7 +324,7 @@
         static type = 'textBox';
 
         isValid() {
-            return this.value.length < 250;
+            return this.value.length < 500;
         }
 
         clear() {
@@ -335,7 +335,7 @@
             const container = super.createElement();
             container.classList.add('textbox_question');
             const textarea = document.createElement('textarea');
-            textarea.maxLength = 250;
+            textarea.maxLength = 500;
             container.appendChild(textarea);
             this.element = textarea;
             this.addListener();
